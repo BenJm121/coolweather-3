@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="省份"
-        android:background="#00f"
+        android:background="#00eeff"
         android:id="@+id/textView"
         android:layout_gravity="center"
         />

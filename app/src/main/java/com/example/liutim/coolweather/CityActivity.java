@@ -30,14 +30,12 @@ public class CityActivity extends AppCompatActivity {
         }else{
             data=city17;
         }
-
         TextView tv= (TextView) findViewById(R.id.textView);
         tv.setText(p);
         ListView listView = (ListView) findViewById(R.id.listview);
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(CityActivity.this, android.R.layout.simple_list_item_1, data);
         listView.setAdapter(adapter);
-
 
     }
 }
