@@ -1,19 +1,12 @@
 package com.example.liutim.coolweather;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,12 +19,27 @@ public class MainActivity extends AppCompatActivity {
 //1表示最顶层省直辖市级，2表示市级，3表现县区级
     private int level=1;
 
+
+    private void showCities(int position) {
+        level=2;
+        this.backButton.setVisibility(View.VISIBLE);
+        if("北京市".equals(MainActivity.this.provinces[position])){
+            ArrayAdapter adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1, city01);
+            listView.setAdapter(adapter);
+        }else{
+            ArrayAdapter adapter =new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1, city17);
+            listView.setAdapter(adapter);
+        }
+    }
+    private Button backButton =null;
+    private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Button button= (Button) findViewById(R.id.button);
-        final ListView listView = (ListView) findViewById(R.id.listview);
+        this.backButton = (Button) findViewById(R.id.button);
+        listView = (ListView) findViewById(R.id.listview);
         ArrayAdapter adapter =
                 new ArrayAdapter<String>(this,
                         android.R.layout.simple_list_item_1, provinces);
@@ -41,15 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
               if(level==1){
-                  level=2;
-                  button.setVisibility(View.VISIBLE);
-                  if("北京市".equals(MainActivity.this.provinces[position])){
-                      ArrayAdapter adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1, city01);
-                      listView.setAdapter(adapter);
-                  }else{
-                      ArrayAdapter adapter =new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1, city17);
-                      listView.setAdapter(adapter);
-                  }
+                  showCities(position);
               }else if(level==2){
                   level=3;
                   ArrayAdapter adapter =new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1, country1701);
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(level==3){
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     listView.setAdapter(adapter);
                 }else if(level==2){
                     level=1;
-                    button.setVisibility(View.GONE);
+                    backButton.setVisibility(View.GONE);
                     ArrayAdapter adapter =
                             new ArrayAdapter<String>(MainActivity.this,
                                     android.R.layout.simple_list_item_1,city17);
@@ -83,4 +83,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
