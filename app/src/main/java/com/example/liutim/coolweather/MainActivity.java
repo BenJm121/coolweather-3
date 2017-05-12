@@ -30,17 +30,11 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter adapter;
 
 
-    private void showCities(int position) {
-        level=2;
-        this.backButton.setVisibility(View.VISIBLE);
-        this.dataList.clear();
-        if("北京市".equals(this.provinces.get(position))){
-            this.dataList.addAll(city01);
-        }else{
-            this.dataList.addAll(city17);
-        }
-        this.adapter.notifyDataSetChanged();
-    }
+    //选中的省或者直辖市的序号（0,1,2...)
+    private int selectedProvinceIndex=0;
+
+
+
 
 
     @Override
@@ -58,12 +52,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
               if(level==1){
-                  showCities(position);
+                  selectedProvinceIndex=position;
+                  showCities(selectedProvinceIndex);
               }else if(level==2){
-                  level=3;
-                  MainActivity.this.dataList.clear();
-                  MainActivity.this.dataList.addAll(country1701);
-                  adapter.notifyDataSetChanged();
+                  showCounties();
               }else{
                   //TODO 选定区县，去显示天气界面
               }
@@ -74,10 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(level==3){
-                    level=2;
-                    MainActivity.this.dataList.clear();
-                    MainActivity.this.dataList.addAll(city17);
-                    MainActivity.this.adapter.notifyDataSetChanged();
+                    showCities(MainActivity.this.selectedProvinceIndex);
                 }else if(level==2){
                     level=1;
                     backButton.setVisibility(View.GONE);
@@ -90,6 +79,25 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void showCities(int position) {
+        level=2;
+        this.backButton.setVisibility(View.VISIBLE);
+        this.dataList.clear();
+        if("北京市".equals(this.provinces.get(position))){
+            this.dataList.addAll(city01);
+        }else{
+            this.dataList.addAll(city17);
+        }
+        this.adapter.notifyDataSetChanged();
+    }
+
+    private void showCounties() {
+        level=3;
+        this.dataList.clear();
+        this.dataList.addAll(country1701);
+        adapter.notifyDataSetChanged();
     }
 
 
