@@ -19,17 +19,20 @@ public class CityActivity extends AppCompatActivity {
     private String[] city17 = {"杭州", "湖州", "嘉兴", "宁波", "绍兴"
             , "台州", "温州", "丽水", "金华", "衢州", "舟山"};
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         String p=getIntent().getStringExtra("p");
         String[] data=null;
         if("北京市".equals(p)){
             data=city01;
-        }else{
+        }else if("浙江省".equals(p)){
             data=city17;
         }
+
         TextView tv= (TextView) findViewById(R.id.textView);
         tv.setText(p);
         ListView listView = (ListView) findViewById(R.id.listview);
